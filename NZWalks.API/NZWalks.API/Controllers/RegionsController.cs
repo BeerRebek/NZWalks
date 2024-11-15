@@ -20,7 +20,7 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GellAllRegions()
+        public async Task<IActionResult> GellAllRegions()
         {
             /*Static List of Region
             var regions = new List<Region>() 
@@ -48,7 +48,7 @@ namespace NZWalks.API.Controllers
             };
             */
 
-            var regions = regionRepository.GetAll();
+            var regions = await regionRepository.GetAllAsync();
 
             // Return DTO regions - Without Using AutoMapper
             /*var regionsDTO = new List<Models.DTO.RegionDTO>();
