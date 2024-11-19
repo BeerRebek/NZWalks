@@ -110,7 +110,7 @@ namespace NZWalks.API.Controllers
             var regionDTO = new Models.DTO.RegionDTO
             {
                 Id = region.Id,
-                 Code = region.Code,
+                Code = region.Code,
                 Area = region.Area,
                 Lat = region.Lat,
                 Long = region.Long,
