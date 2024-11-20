@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
+using NZWalks.API.Models.DTO;
+using System.Data;
 
 namespace NZWalks.API.Repositories
 {
@@ -71,5 +74,26 @@ namespace NZWalks.API.Repositories
             return existingWalk;
         }
 
+        public async Task<WalkDetailDTO> GetWalkDetailsAsync(Guid Walkdid)
+        {
+            try
+            {
+                var parameter = new SqlParameter("@WalkId", SqlDbType.UniqueIdentifier)
+                {
+                    Value = Walkdid
+                };
+
+                var walkDetails = await nZWalksDBContext.WalkDetails.FromSqlRaw("EXEC GetWalkDetails @WalkId", parameter).ToListAsync();
+                if (walkDetails == null)
+                {
+                    return null;
+                }
+                return walkDetails.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving walk details.", ex);
+            }
+        }
     }
 }

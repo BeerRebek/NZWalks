@@ -112,5 +112,23 @@ namespace NZWalks.API.Controllers
             var walkDTO = mapper.Map<Models.DTO.WalkDTO>(walkDomain);
             return Ok(walkDTO);
         }
+
+        [HttpGet("{id}/walkdetails")]
+        public async Task<IActionResult> GetWalkDeatilsByIdAsync(Guid id)
+        {
+            try
+            {
+                var walkDetails = await walkRepository.GetWalkDetailsAsync(id);
+                if (walkDetails == null)
+                {
+                    return NotFound();
+                }
+                return Ok(walkDetails);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "An internal server error occurred.");
+            }
+        }
     }
 }
