@@ -48,7 +48,7 @@ namespace NZWalks.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddWalkAsync([FromBody] AddWalkRequestDTO addWalkRequestDTO)
+        public async Task<IActionResult> AddWalkAsync(AddWalkRequestDTO addWalkRequestDTO)
         {
             //Conventional Convertion of  DTO to Domain
             /*
@@ -128,6 +128,25 @@ namespace NZWalks.API.Controllers
             catch(Exception ex)
             {
                 return StatusCode(500, "An internal server error occurred.");
+            }
+        }
+
+        [HttpGet("region/{regionCode}")]
+        public async Task<IActionResult> GetWalkByRegionDetailsAsync(string regionCode)
+        {
+            try
+            {
+                var walksde = await walkRepository.GetWalkByRegionDetailsAsync(regionCode);
+                if(walksde == null || walksde.Count == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(walksde);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "An internal server error occurred : " +ex.Message);
+
             }
         }
     }

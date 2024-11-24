@@ -11,5 +11,6 @@ namespace NZWalks.API.Repositories
         Task<Walk> DeleteAsync(Guid id);
         Task<Walk> UpdateAsync(Guid id, Walk region);
         Task<WalkDetailDTO> GetWalkDetailsAsync(Guid id);
+        Task<List<WalkByRegionDTO>>  GetWalkByRegionDetailsAsync(string reagionCode);
     }
 }

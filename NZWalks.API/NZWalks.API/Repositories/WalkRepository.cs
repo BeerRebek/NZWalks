@@ -95,5 +95,26 @@ namespace NZWalks.API.Repositories
                 throw new Exception("An error occurred while retrieving walk details.", ex);
             }
         }
+
+        public async Task<List<WalkByRegionDTO>> GetWalkByRegionDetailsAsync(string regionCode)
+        {
+            try
+            {
+                var parmeter = new SqlParameter("@RegionCode", regionCode); 
+                Console.WriteLine("Executing stored procedure with RegionCode: " + regionCode);
+
+                var walkByRegionDetails = await nZWalksDBContext.walkByRegionDetails
+                                                .FromSqlRaw("EXEC GetWalksByRegion @RegionCode", parmeter)
+                                                .ToListAsync();
+
+                return walkByRegionDetails;
+            }
+            catch (Exception ex)
+            { // Log the exception
+              Console.WriteLine("Exception in GetWalksByRegionAsync: " + ex.Message); 
+              throw; 
+            }
+        
+        }
     }
 }

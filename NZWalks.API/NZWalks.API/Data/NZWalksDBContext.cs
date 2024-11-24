@@ -16,11 +16,13 @@ namespace NZWalks.API.Data
         public DbSet<WalkDifficulty> WalkDifficulty { get; set; } //Create WalkDifficulty Table if not exist in DB
 
         public DbSet<WalkDetailDTO> WalkDetails { get; set; }
+        public DbSet<WalkByRegionDTO> walkByRegionDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // Other configurations...
             modelBuilder.Entity<WalkDetailDTO>().HasNoKey().ToView(null); // Indicate that this entity has no key and is not mapped to a table
+            modelBuilder.Entity<WalkByRegionDTO>().HasNoKey().ToView(null); // Indicate that this entity has no key and is not mapped to a table
         }
     }
 }
